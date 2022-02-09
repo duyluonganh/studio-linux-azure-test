@@ -13,4 +13,4 @@ steps:
 - task: PublishPipelineArtifact@0
   inputs:
     artifactName: 'JUnit Report' 
-    targetPath: report/
+    targetPath: **/Reports/**

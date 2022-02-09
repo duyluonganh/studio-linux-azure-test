@@ -21,8 +21,4 @@ import org.openqa.selenium.Keys as Keys
 
 WebUI.openBrowser('katalon.com')
 
-WebUI.closeBrowser()
-
-if (OSUtil.isUnix()) {
-	'killall -9 chromedriver'.execute()
-}
+DriverFactory.getWebDriver().close()
