@@ -7,6 +7,7 @@ import com.kms.katalon.selenium.driver.CChromeDriver
 
 System.setProperty(DriverFactory.CHROME_DRIVER_PATH_PROPERTY_KEY, DriverFactory.getChromeDriverPath());
 CChromeDriver driver = new CChromeDriver(new DesiredCapabilities(), 0)
+driver.get('katalon.com')
 
 DriverFactory.changeWebDriver(driver)
 WebUI.closeBrowser()
