@@ -448,7 +448,8 @@ public class DriverFactory {
             	}
             }
         }
-        addKatalonExtensionsToChrome(desiredCapibilities);
+        System.out.println("hello");
+        //addKatalonExtensionsToChrome(desiredCapibilities);
         return desiredCapibilities;
     }
 
