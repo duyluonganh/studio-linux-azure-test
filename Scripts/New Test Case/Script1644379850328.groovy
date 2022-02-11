@@ -5,10 +5,7 @@ import com.kms.katalon.core.webui.driver.DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.selenium.driver.CChromeDriver
 
-System.setProperty(DriverFactory.CHROME_DRIVER_PATH_PROPERTY_KEY, DriverFactory.getChromeDriverPath());
-CChromeDriver driver = new CChromeDriver(new DesiredCapabilities(), 0)
-
-DriverFactory.changeWebDriver(driver)
+WebUI.openBrowser('')
 WebUI.navigateToUrl('katalon.com')
 WebUI.closeBrowser()
 //
