@@ -9,7 +9,7 @@ import com.kms.katalon.selenium.driver.CChromeDriver
 DriverFactory2.openWebDriver()
 
 DriverFactory.changeWebDriver(DriverFactory2.getWebDriver())
-WebUI.navigateToUrl('katalon.com')
+//WebUI.navigateToUrl('katalon.com')
 WebUI.closeBrowser()
 //
 //if (OSUtil.isUnix()) {

@@ -449,6 +449,7 @@ public class DriverFactory2 {
             }
         }
         System.out.println("hello");
+        System.out.println(JsonUtil.toJson(desiredCapibilities.asMap()));
         //addKatalonExtensionsToChrome(desiredCapibilities);
         return desiredCapibilities;
     }
