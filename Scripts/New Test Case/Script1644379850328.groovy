@@ -11,7 +11,9 @@ ChromeDriver driver = new ChromeDriver(options)
 
 DriverFactory.changeWebDriver(driver)
 WebUI.closeBrowser()
-
-if (OSUtil.isUnix()) {
-	'killall -9 chromedriver'.execute()
-}
+//
+//if (OSUtil.isUnix()) {
+//	'killall -9 chromedriver'.execute()
+//	def list = 'ps -aux | grep -i  chromedriver'.execute()
+//	println list.in.text	
+//}
