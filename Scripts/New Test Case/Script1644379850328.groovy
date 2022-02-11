@@ -2,14 +2,13 @@ import org.openqa.selenium.chrome.ChromeOptions
 import org.openqa.selenium.remote.DesiredCapabilities
 
 import com.kms.katalon.core.webui.driver.DriverFactory
-import com.kms.katalon.core.webui.driver.DriverFactory2
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.selenium.driver.CChromeDriver
 
-DriverFactory2.openWebDriver()
+System.setProperty(DriverFactory.CHROME_DRIVER_PATH_PROPERTY_KEY, DriverFactory.getChromeDriverPath());
+CChromeDriver driver = new CChromeDriver(new DesiredCapabilities(), 0)
 
-DriverFactory.changeWebDriver(DriverFactory2.getWebDriver())
-//WebUI.navigateToUrl('katalon.com')
+DriverFactory.changeWebDriver(driver)
 WebUI.closeBrowser()
 //
 //if (OSUtil.isUnix()) {
