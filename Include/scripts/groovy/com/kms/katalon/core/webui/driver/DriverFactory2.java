@@ -258,8 +258,8 @@ public class DriverFactory2 {
                 switchToSmartWaitWebDriver(webDriver);
             }
 
-            TestingEvent browserOpenedEvent = new TestingEvent(TestingEventType.BROWSER_OPENED, webDriver);
-            EventBusSingleton.getInstance().getEventBus().post(browserOpenedEvent);
+//            TestingEvent browserOpenedEvent = new TestingEvent(TestingEventType.BROWSER_OPENED, webDriver);
+//            EventBusSingleton.getInstance().getEventBus().post(browserOpenedEvent);
             
             return webDriver;
         } catch (Error e) {
