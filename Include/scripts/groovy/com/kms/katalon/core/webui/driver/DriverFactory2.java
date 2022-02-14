@@ -255,7 +255,7 @@ public class DriverFactory2 {
             }
             if (webDriver != null) {
                 changeWebDriver(webDriver);
-                switchToSmartWaitWebDriver(webDriver);
+                //switchToSmartWaitWebDriver(webDriver);
             }
 
 //            TestingEvent browserOpenedEvent = new TestingEvent(TestingEventType.BROWSER_OPENED, webDriver);
@@ -288,7 +288,7 @@ public class DriverFactory2 {
     public static void changeWebDriver(WebDriver webDriver) {
         changeWebDriverWithoutLog(webDriver);
         logBrowserRunData(webDriver);
-        switchToSmartWaitWebDriver(webDriver);
+        //switchToSmartWaitWebDriver(webDriver);
     }
 
     private static void changeWebDriverWithoutLog(WebDriver webDriver) {
