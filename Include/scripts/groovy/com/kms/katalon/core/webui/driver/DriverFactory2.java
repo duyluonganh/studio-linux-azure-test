@@ -396,9 +396,9 @@ public class DriverFactory2 {
                 throw new StepFailedException(
                         MessageFormat.format(StringConstants.DRI_ERROR_DRIVER_X_NOT_IMPLEMENTED, driver.getName()));
         }
-        isTimeCapsuleAvailable(driver);
-        saveWebDriverSessionData(webDriver);
-        switchToSmartWaitWebDriver(webDriver);
+        //isTimeCapsuleAvailable(driver);
+        //saveWebDriverSessionData(webDriver);
+        //switchToSmartWaitWebDriver(webDriver);
         return webDriver;
     }
 
@@ -442,7 +442,7 @@ public class DriverFactory2 {
             if (WebDriverProxyUtil.isManualSocks(proxyInformation)) {
                 WebDriverPropertyUtil.addArgumentsForChrome(desiredCapibilities,
                         "--proxy-server=socks5://" + WebDriverProxyUtil.getProxyString(proxyInformation));
-            } else {
+            } else {	
             	if (ProxyOption.valueOf(proxyInformation.getProxyOption()) != ProxyOption.NO_PROXY) {
             		desiredCapibilities.setCapability(CapabilityType.PROXY, getDefaultProxy());
             	}
