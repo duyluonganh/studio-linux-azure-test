@@ -774,6 +774,7 @@ public class DriverFactory2 {
         try {
         	System.out.println("Create socket");
             myClient = new Socket(RunConfiguration.getSessionServerHost(), RunConfiguration.getSessionServerPort());
+            myClient.setSoTimeout(5000);
             myClient.setTcpNoDelay(true);
             output = new PrintStream(myClient.getOutputStream());
             output.println(remoteWebDriver.getSessionId());
@@ -793,7 +794,6 @@ public class DriverFactory2 {
             System.out.println("Message sent");
         } catch (Exception e) {
             // Ignore for this exception
-        	e.printStackTrace();
         } finally {
             if (myClient != null) {
                 try {
