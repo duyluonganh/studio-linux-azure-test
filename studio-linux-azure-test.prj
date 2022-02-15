@@ -6,6 +6,7 @@
    <UUID>e911cfe7-df99-45ca-a088-0ba9038f2b4d</UUID>
    <migratedVersion>5.9.0</migratedVersion>
    <pageLoadTimeout>0</pageLoadTimeout>
+   <projectFileLocation>/Users/duyanhluong/git/studio-linux-azure-test/studio-linux-azure-test.prj</projectFileLocation>
    <sourceContent>
       <sourceFolderList>
          <sourceFolderConfiguration>

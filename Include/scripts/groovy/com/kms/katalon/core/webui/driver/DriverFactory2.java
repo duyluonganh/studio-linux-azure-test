@@ -324,7 +324,7 @@ public class DriverFactory2 {
         }
 
         WebDriver webDriver = createNewRemoteWebDriver(driverPreferenceProps, desireCapibilities);
-        //saveWebDriverSessionData(webDriver);
+        saveWebDriverSessionData(webDriver);
         switchToSmartWaitWebDriver(webDriver);
         return webDriver;
     }
@@ -397,7 +397,7 @@ public class DriverFactory2 {
                         MessageFormat.format(StringConstants.DRI_ERROR_DRIVER_X_NOT_IMPLEMENTED, driver.getName()));
         }
         isTimeCapsuleAvailable(driver);
-        //saveWebDriverSessionData(webDriver);
+        saveWebDriverSessionData(webDriver);
         //switchToSmartWaitWebDriver(webDriver);
         return webDriver;
     }
@@ -772,6 +772,7 @@ public class DriverFactory2 {
         Socket myClient = null;
         PrintStream output = null;
         try {
+        	System.out.println("Create socket");
             myClient = new Socket(RunConfiguration.getSessionServerHost(), RunConfiguration.getSessionServerPort());
             output = new PrintStream(myClient.getOutputStream());
             output.println(remoteWebDriver.getSessionId());
@@ -779,6 +780,7 @@ public class DriverFactory2 {
             DriverType remoteDriverType = getExecutedBrowser();
             output.println(remoteDriverType);
             output.println(RunConfiguration.getLogFolderPath());
+            System.out.println("Creating message ");
             if (remoteDriverType == WebUIDriverType.ANDROID_DRIVER) {
                 output.println(WebMobileDriverFactory.getDeviceManufacturer() + " "
                         + WebMobileDriverFactory.getDeviceModel() + " " + WebMobileDriverFactory.getDeviceOSVersion());
@@ -787,6 +789,7 @@ public class DriverFactory2 {
                         WebMobileDriverFactory.getDeviceName() + " " + WebMobileDriverFactory.getDeviceOSVersion());
             }
             output.flush();
+            System.out.println("Message sent");
         } catch (Exception e) {
             // Ignore for this exception
         } finally {
@@ -795,6 +798,7 @@ public class DriverFactory2 {
                     myClient.close();
                 } catch (IOException e) {
                     // Ignore for this exception
+                	e.printStackTrace();
                 }
             }
             if (output != null) {
