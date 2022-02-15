@@ -397,7 +397,7 @@ public class DriverFactory2 {
                         MessageFormat.format(StringConstants.DRI_ERROR_DRIVER_X_NOT_IMPLEMENTED, driver.getName()));
         }
         isTimeCapsuleAvailable(driver);
-        saveWebDriverSessionData(webDriver);
+        //saveWebDriverSessionData(webDriver);
         //switchToSmartWaitWebDriver(webDriver);
         return webDriver;
     }
