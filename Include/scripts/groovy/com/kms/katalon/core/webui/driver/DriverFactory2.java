@@ -324,7 +324,7 @@ public class DriverFactory2 {
         }
 
         WebDriver webDriver = createNewRemoteWebDriver(driverPreferenceProps, desireCapibilities);
-        saveWebDriverSessionData(webDriver);
+        //saveWebDriverSessionData(webDriver);
         switchToSmartWaitWebDriver(webDriver);
         return webDriver;
     }
