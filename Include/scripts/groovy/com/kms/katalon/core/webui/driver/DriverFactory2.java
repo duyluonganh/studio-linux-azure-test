@@ -255,11 +255,11 @@ public class DriverFactory2 {
             }
             if (webDriver != null) {
                 changeWebDriver(webDriver);
-                //switchToSmartWaitWebDriver(webDriver);
+                switchToSmartWaitWebDriver(webDriver);
             }
 
-//            TestingEvent browserOpenedEvent = new TestingEvent(TestingEventType.BROWSER_OPENED, webDriver);
-//            EventBusSingleton.getInstance().getEventBus().post(browserOpenedEvent);
+            TestingEvent browserOpenedEvent = new TestingEvent(TestingEventType.BROWSER_OPENED, webDriver);
+            EventBusSingleton.getInstance().getEventBus().post(browserOpenedEvent);
             
             return webDriver;
         } catch (Error e) {
@@ -288,7 +288,7 @@ public class DriverFactory2 {
     public static void changeWebDriver(WebDriver webDriver) {
         changeWebDriverWithoutLog(webDriver);
         logBrowserRunData(webDriver);
-        //switchToSmartWaitWebDriver(webDriver);
+        switchToSmartWaitWebDriver(webDriver);
     }
 
     private static void changeWebDriverWithoutLog(WebDriver webDriver) {
@@ -398,7 +398,7 @@ public class DriverFactory2 {
         }
         isTimeCapsuleAvailable(driver);
         saveWebDriverSessionData(webDriver);
-        //switchToSmartWaitWebDriver(webDriver);
+        switchToSmartWaitWebDriver(webDriver);
         return webDriver;
     }
 
@@ -443,14 +443,10 @@ public class DriverFactory2 {
                 WebDriverPropertyUtil.addArgumentsForChrome(desiredCapibilities,
                         "--proxy-server=socks5://" + WebDriverProxyUtil.getProxyString(proxyInformation));
             } else {
-            	if (ProxyOption.valueOf(proxyInformation.getProxyOption()) != ProxyOption.NO_PROXY) {
-            		desiredCapibilities.setCapability(CapabilityType.PROXY, getDefaultProxy());
-            	}
+                desiredCapibilities.setCapability(CapabilityType.PROXY, getDefaultProxy());
             }
         }
-        System.out.println("hello");
-        System.out.println(JsonUtil.toJson(desiredCapibilities.asMap()));
-        //addKatalonExtensionsToChrome(desiredCapibilities);
+        addKatalonExtensionsToChrome(desiredCapibilities);
         return desiredCapibilities;
     }
 
@@ -626,9 +622,9 @@ public class DriverFactory2 {
     private static WebDriver createNewRemoteChromeDriver(DesiredCapabilities desireCapibilities)
             throws MalformedURLException, IOException, Exception {
         String chromeDebugHost = RunConfiguration.getDriverSystemProperty(WEB_UI_DRIVER_PROPERTY, DEBUG_HOST,
-                DriverFactory2.DEFAULT_DEBUG_HOST);
+                DriverFactory.DEFAULT_DEBUG_HOST);
         String chromeDebugPort = RunConfiguration.getDriverSystemProperty(WEB_UI_DRIVER_PROPERTY, DEBUG_PORT,
-                DriverFactory2.DEFAULT_CHROME_DEBUG_PORT);
+                DriverFactory.DEFAULT_CHROME_DEBUG_PORT);
         System.setProperty(CHROME_DRIVER_PATH_PROPERTY_KEY, getChromeDriverPath());
         desireCapibilities.merge(DesiredCapabilities.chrome());
         Map<String, Object> chromeOptions = new HashMap<String, Object>();
@@ -646,9 +642,9 @@ public class DriverFactory2 {
     private static WebDriver createNewRemoteFirefoxDriver(DesiredCapabilities desireCapibilities)
             throws MalformedURLException, Exception {
         String fireFoxDebugHost = RunConfiguration.getDriverSystemProperty(WEB_UI_DRIVER_PROPERTY, DEBUG_HOST,
-                DriverFactory2.DEFAULT_DEBUG_HOST);
+                DriverFactory.DEFAULT_DEBUG_HOST);
         String firefoxDebugPort = RunConfiguration.getDriverSystemProperty(WEB_UI_DRIVER_PROPERTY, DEBUG_PORT,
-                DriverFactory2.DEFAULT_FIREFOX_DEBUG_PORT);
+                DriverFactory.DEFAULT_FIREFOX_DEBUG_PORT);
         desireCapibilities.merge(DesiredCapabilities.firefox());
         URL firefoxDriverUrl = new URL("http", fireFoxDebugHost, Integer.parseInt(firefoxDebugPort), "/hub");
         RemoteWebDriver webDriver = new RemoteWebDriver(firefoxDriverUrl, desireCapibilities);
@@ -768,21 +764,20 @@ public class DriverFactory2 {
                 || webDriver instanceof SafariDriver) {
             return;
         }
+        if (OSUtil.isUnix()) {
+        	return;
+        }
         RemoteWebDriver remoteWebDriver = (RemoteWebDriver) webDriver;
         Socket myClient = null;
         PrintStream output = null;
         try {
-        	System.out.println("Create socket");
             myClient = new Socket(RunConfiguration.getSessionServerHost(), RunConfiguration.getSessionServerPort());
-            myClient.setSoTimeout(5000);
-            myClient.setTcpNoDelay(true);
             output = new PrintStream(myClient.getOutputStream());
             output.println(remoteWebDriver.getSessionId());
             output.println(getWebDriverServerUrl(remoteWebDriver));
             DriverType remoteDriverType = getExecutedBrowser();
             output.println(remoteDriverType);
             output.println(RunConfiguration.getLogFolderPath());
-            System.out.println("Creating message ");
             if (remoteDriverType == WebUIDriverType.ANDROID_DRIVER) {
                 output.println(WebMobileDriverFactory.getDeviceManufacturer() + " "
                         + WebMobileDriverFactory.getDeviceModel() + " " + WebMobileDriverFactory.getDeviceOSVersion());
@@ -791,7 +786,6 @@ public class DriverFactory2 {
                         WebMobileDriverFactory.getDeviceName() + " " + WebMobileDriverFactory.getDeviceOSVersion());
             }
             output.flush();
-            System.out.println("Message sent");
         } catch (Exception e) {
             // Ignore for this exception
         } finally {
@@ -800,7 +794,6 @@ public class DriverFactory2 {
                     myClient.close();
                 } catch (IOException e) {
                     // Ignore for this exception
-                	e.printStackTrace();
                 }
             }
             if (output != null) {
@@ -886,7 +879,7 @@ public class DriverFactory2 {
                         desiredCapabilities.setCapability(FirefoxDriver.PROFILE, (FirefoxProfile) options);
                         webDriver = createNewFirefoxDriver(desiredCapabilities);
                     } else if (options instanceof DesiredCapabilities) {
-                        System.setProperty("webdriver.gecko.driver", DriverFactory2.getGeckoDriverPath());
+                        System.setProperty("webdriver.gecko.driver", DriverFactory.getGeckoDriverPath());
                         webDriver = new CFirefoxDriver(GeckoDriverService.createDefaultService(),
                                 (DesiredCapabilities) options);
                     } else {
